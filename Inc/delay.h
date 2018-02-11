@@ -1,13 +1,15 @@
 #ifndef DELAY_H_
 #define DELAY_H_
 
+#include "dwt.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 //void delay_us(uint32_t us);
-#define delay_ms(us) LL_mDelay(us)
+#define delay_us(us) DWT_Delay(us)
+#define delay_ms(ms) DWT_Delay_ms(ms)
 //void Delay(__IO uint32_t nTime);
 
 //void TimingDelay_Decrement(void);

@@ -41,6 +41,7 @@
 
 /* USER CODE BEGIN Includes */
 #include <stdlib.h>
+#include <delay.h>
 #include "lcd.h"
 /* USER CODE END Includes */
 
@@ -98,6 +99,7 @@ int main(void)
   MX_GPIO_Init();
   MX_FMC_Init();
   /* USER CODE BEGIN 2 */
+  DWT_Init();
   LCD_Init();
   /* USER CODE END 2 */
 
@@ -112,7 +114,7 @@ int main(void)
     if( rnd & 1)  HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
     if( rnd & 2)  HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
     if( rnd & 4)  HAL_GPIO_TogglePin(LD3_GPIO_Port, LD3_Pin);
-    LL_mDelay(200);
+    delay_ms(200);
   }
   /* USER CODE END 3 */
 
