@@ -203,17 +203,17 @@ static void MX_FMC_Init(void)
   hsram1.Init.WriteFifo = FMC_WRITE_FIFO_DISABLE;
   hsram1.Init.PageSize = FMC_PAGE_SIZE_NONE;
   /* Timing */
-  Timing.AddressSetupTime = 15;
+  Timing.AddressSetupTime = 8;
   Timing.AddressHoldTime = 15;
-  Timing.DataSetupTime = 255;
-  Timing.BusTurnAroundDuration = 15;
+  Timing.DataSetupTime = 15;
+  Timing.BusTurnAroundDuration = 8;
   Timing.CLKDivision = 16;
   Timing.DataLatency = 17;
   Timing.AccessMode = FMC_ACCESS_MODE_A;
   /* ExtTiming */
-  ExtTiming.AddressSetupTime = 15;
+  ExtTiming.AddressSetupTime = 8;
   ExtTiming.AddressHoldTime = 15;
-  ExtTiming.DataSetupTime = 255;
+  ExtTiming.DataSetupTime = 15;
   ExtTiming.BusTurnAroundDuration = 15;
   ExtTiming.CLKDivision = 16;
   ExtTiming.DataLatency = 17;
@@ -236,8 +236,8 @@ static void MX_FMC_Init(void)
 static void MX_GPIO_Init(void)
 {
 
-  LL_EXTI_InitTypeDef EXTI_InitStruct;
   LL_GPIO_InitTypeDef GPIO_InitStruct;
+  LL_EXTI_InitTypeDef EXTI_InitStruct;
 
   /* GPIO Ports Clock Enable */
   LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOC);
