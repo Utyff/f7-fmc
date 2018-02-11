@@ -12,6 +12,7 @@ set(OBJCOPY arm-none-eabi-objcopy)
 set(OBJDUMP arm-none-eabi-objdump)
 set(SIZE arm-none-eabi-size)
 
+
 SET(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/STM32F746ZGTx_FLASH.ld)
 
 #Uncomment for hardware floating point
@@ -31,7 +32,7 @@ PROJECT(f7-fmc C ASM)
 set(CMAKE_CXX_STANDARD 11)
 
 #add_definitions(-DARM_MATH_CM7 -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING -D__FPU_PRESENT=1 )
-add_definitions(-DUSE_FULL_LL_DRIVER -D__weak=__attribute__\(\(weak\)\) -D__packed=__attribute__\(\(__packed__\)\) -DUSE_HAL_DRIVER -DSTM32F746xx)
+add_definitions(-DUSE_FULL_LL_DRIVER -D__weak=__attribute__\(\(weak\)\) -D__packed=__attribute__\(\(__packed__\)\) -DUSE_HAL_DRIVER -DSTM32F746xx )
 
 file(GLOB_RECURSE SOURCES "startup/*.*" "Drivers/*.*" "Src/*.*" "Inc/*.*")
 

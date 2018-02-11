@@ -1,0 +1,23 @@
+
+GPIO     FMC          LCD 8080
+PD0	FMC_D2	       D2
+PD1	FMC_D3	       D3
+PD4	FMC_NOE	       RD
+PD5	FMC_NWE	       RW
+PD7	FMC_NE1	       CS
+PD8	FMC_D13	       D13
+PD9	FMC_D14	       D14
+PD10	FMC_D15	       D15
+PD13    FMC_A18        RS
+PD14	FMC_D0	       D0
+PD15	FMC_D1	       D1
+                          
+PE7	FMC_D4	       D4
+PE8	FMC_D5	       D5
+PE9	FMC_D6	       D6
+PE10	FMC_D7	       D7
+PE11	FMC_D8	       D8
+PE12	FMC_D9	       D9
+PE13	FMC_D10	       D10
+PE14	FMC_D11	       D11
+PE15	FMC_D12	       D12
