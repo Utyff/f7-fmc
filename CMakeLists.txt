@@ -1,6 +1,6 @@
 SET(CMAKE_SYSTEM_NAME Generic)
 SET(CMAKE_SYSTEM_VERSION 1)
-cmake_minimum_required(VERSION 3.7)
+cmake_minimum_required(VERSION 3.9)
 
 # specify the cross compiler
 SET(CMAKE_C_COMPILER_WORKS 1)
@@ -11,7 +11,6 @@ set(AR arm-none-eabi-ar)
 set(OBJCOPY arm-none-eabi-objcopy)
 set(OBJDUMP arm-none-eabi-objdump)
 set(SIZE arm-none-eabi-size)
-
 
 SET(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/STM32F746ZGTx_FLASH.ld)
 
