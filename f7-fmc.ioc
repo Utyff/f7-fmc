@@ -1,9 +1,9 @@
 #MicroXplorer Configuration settings - do not modify
-FMC.AddressSetupTime1=8
-FMC.BusTurnAroundDuration1=8
-FMC.DataSetupTime1=15
-FMC.ExtendedAddressSetupTime1=8
-FMC.ExtendedDataSetupTime1=15
+FMC.AddressSetupTime1=15
+FMC.BusTurnAroundDuration1=15
+FMC.DataSetupTime1=55
+FMC.ExtendedAddressSetupTime1=15
+FMC.ExtendedDataSetupTime1=55
 FMC.ExtendedMode1=FMC_EXTENDED_MODE_ENABLE
 FMC.IPParameters=WriteOperation1,ExtendedMode1,WriteFifo1,WriteFifo2,WriteFifo3,WriteFifo4,AddressSetupTime1,DataSetupTime1,BusTurnAroundDuration1,ExtendedDataSetupTime1,ExtendedAddressSetupTime1
 FMC.WriteFifo1=FMC_WRITE_FIFO_DISABLE
@@ -171,7 +171,7 @@ ProjectManager.StackSize=0x400
 ProjectManager.TargetToolchain=SW4STM32
 ProjectManager.ToolChainLocation=
 ProjectManager.UnderRoot=true
-ProjectManager.functionlistsort=1-MX_GPIO_Init-GPIO-false-LL-true,2-SystemClock_Config-RCC-false-LL-true,3-MX_CORTEX_M7_Init-CORTEX_M7-false-LL-true,4-MX_FMC_Init-FMC-false-HAL-true
+ProjectManager.functionlistsort=1-MX_GPIO_Init-GPIO-false-HAL-true,2-SystemClock_Config-RCC-false-HAL-true,3-MX_CORTEX_M7_Init-CORTEX_M7-false-HAL-true,4-MX_FMC_Init-FMC-false-HAL-true
 RCC.48MHZClocksFreq_Value=24000000
 RCC.ADC12outputFreq_Value=72000000
 RCC.ADC34outputFreq_Value=72000000

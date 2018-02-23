@@ -42,17 +42,6 @@
 #define __MAIN_H__
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32f7xx_hal.h"
-#include "stm32f7xx_ll_rcc.h"
-#include "stm32f7xx_ll_bus.h"
-#include "stm32f7xx_ll_system.h"
-#include "stm32f7xx_ll_exti.h"
-#include "stm32f7xx_ll_cortex.h"
-#include "stm32f7xx_ll_utils.h"
-#include "stm32f7xx_ll_pwr.h"
-#include "stm32f7xx_ll_dma.h"
-#include "stm32f7xx.h"
-#include "stm32f7xx_ll_gpio.h"
 
 /* USER CODE BEGIN Includes */
 
@@ -60,25 +49,25 @@
 
 /* Private define ------------------------------------------------------------*/
 
-#define USER_Btn_Pin LL_GPIO_PIN_13
+#define USER_Btn_Pin GPIO_PIN_13
 #define USER_Btn_GPIO_Port GPIOC
-#define MCO_Pin LL_GPIO_PIN_0
+#define MCO_Pin GPIO_PIN_0
 #define MCO_GPIO_Port GPIOH
-#define LD1_Pin LL_GPIO_PIN_0
+#define LD1_Pin GPIO_PIN_0
 #define LD1_GPIO_Port GPIOB
-#define LD3_Pin LL_GPIO_PIN_14
+#define LD3_Pin GPIO_PIN_14
 #define LD3_GPIO_Port GPIOB
-#define USB_PowerSwitchOn_Pin LL_GPIO_PIN_6
+#define USB_PowerSwitchOn_Pin GPIO_PIN_6
 #define USB_PowerSwitchOn_GPIO_Port GPIOG
-#define USB_OverCurrent_Pin LL_GPIO_PIN_7
+#define USB_OverCurrent_Pin GPIO_PIN_7
 #define USB_OverCurrent_GPIO_Port GPIOG
-#define TMS_Pin LL_GPIO_PIN_13
+#define TMS_Pin GPIO_PIN_13
 #define TMS_GPIO_Port GPIOA
-#define TCK_Pin LL_GPIO_PIN_14
+#define TCK_Pin GPIO_PIN_14
 #define TCK_GPIO_Port GPIOA
-#define SW0_Pin LL_GPIO_PIN_3
+#define SW0_Pin GPIO_PIN_3
 #define SW0_GPIO_Port GPIOB
-#define LD2_Pin LL_GPIO_PIN_7
+#define LD2_Pin GPIO_PIN_7
 #define LD2_GPIO_Port GPIOB
 
 /* ########################## Assert Selection ############################## */
