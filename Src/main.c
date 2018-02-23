@@ -110,11 +110,13 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-    int rnd = random() & 15;
-    if( rnd & 1)  HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
-    if( rnd & 2)  HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-    if( rnd & 4)  HAL_GPIO_TogglePin(LD3_GPIO_Port, LD3_Pin);
-    delay_ms(200);
+    int rnd = random() & 3;
+    if(rnd == 0)  HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
+    rnd = random() & 3;
+    if(rnd == 0)  HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+    rnd = random() & 3;
+    if(rnd == 0)  HAL_GPIO_TogglePin(LD3_GPIO_Port, LD3_Pin);
+    delay_ms(100);
   }
   /* USER CODE END 3 */
 
@@ -211,17 +213,17 @@ static void MX_FMC_Init(void)
   hsram1.Init.WriteFifo = FMC_WRITE_FIFO_DISABLE;
   hsram1.Init.PageSize = FMC_PAGE_SIZE_NONE;
   /* Timing */
-  Timing.AddressSetupTime = 15;
-  Timing.AddressHoldTime = 15;
-  Timing.DataSetupTime = 55;
+  Timing.AddressSetupTime = 7;
+  Timing.AddressHoldTime = 7;
+  Timing.DataSetupTime = 15;
   Timing.BusTurnAroundDuration = 15;
   Timing.CLKDivision = 16;
   Timing.DataLatency = 17;
   Timing.AccessMode = FMC_ACCESS_MODE_A;
   /* ExtTiming */
-  ExtTiming.AddressSetupTime = 15;
-  ExtTiming.AddressHoldTime = 15;
-  ExtTiming.DataSetupTime = 55;
+  ExtTiming.AddressSetupTime = 7;
+  ExtTiming.AddressHoldTime = 7;
+  ExtTiming.DataSetupTime = 15;
   ExtTiming.BusTurnAroundDuration = 15;
   ExtTiming.CLKDivision = 16;
   ExtTiming.DataLatency = 17;

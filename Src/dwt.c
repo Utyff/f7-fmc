@@ -22,7 +22,7 @@ uint32_t DWT_Elapsed_Tick(uint32_t t0) {
     if (DWT->CYCCNT > t0)
         return DWT->CYCCNT - t0;
 
-    return (uint32_t)((((uint64_t) 0x100000000) + DWT->CYCCNT) - t0);
+    return (uint32_t) ((((uint64_t) 0x100000000) + DWT->CYCCNT) - t0);
 }
 
 void DWT_Init() {
