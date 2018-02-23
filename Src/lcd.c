@@ -587,7 +587,7 @@ void LCD_Init(void) {
         if (lcddev.id != 0X9341)        // 9341 Non-try is not 6804
         {
             return;
-            _Error_Handler(__FILE__, __LINE__);
+//            _Error_Handler(__FILE__, __LINE__);
         }
     }
 
