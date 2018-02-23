@@ -1,5 +1,9 @@
 #include "dwt.h"
 
+#ifndef __CORE_CM7_H_GENERIC
+#error "This file required Cortex-M7"
+#endif
+
 
 #define DWT_Get() DWT->CYCCNT
 
@@ -18,12 +22,8 @@ uint32_t DWT_Elapsed_Tick(uint32_t t0) {
     if (DWT->CYCCNT > t0)
         return DWT->CYCCNT - t0;
 
-    return (uint32_t) ((((uint64_t) 0x100000000) + DWT->CYCCNT) - t0);
+    return (uint32_t)((((uint64_t) 0x100000000) + DWT->CYCCNT) - t0);
 }
-
-#ifndef __CORE_CM7_H_GENERIC
-#error
-#endif
 
 void DWT_Init() {
     if (!(CoreDebug->DEMCR & CoreDebug_DEMCR_TRCENA_Msk)) {
