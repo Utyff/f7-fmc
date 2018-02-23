@@ -74,7 +74,7 @@ _lcd_dev lcddev;
 //regval: register value
 void LCD_WR_REG(vu16 regval) {
     regval = regval;        // Use -O2 optimization, you must insert delay
-    LCD->LCD_REG = regval;// write to write register number
+    LCD->LCD_REG = regval;  // write to write register number
     delay_us(1);
 }
 
@@ -720,7 +720,7 @@ void LCD_Clear(u16 color) {
     LCD_WriteRAM_Prepare();            // start writing GRAM
     for (index = 0; index < totalpoint; index++) {
         LCD->LCD_RAM = color;
-        opt_delay(10);
+        opt_delay(8);
     }
 
     // count time for one circle

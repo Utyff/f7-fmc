@@ -210,21 +210,21 @@ static void MX_FMC_Init(void)
   hsram1.Init.AsynchronousWait = FMC_ASYNCHRONOUS_WAIT_DISABLE;
   hsram1.Init.WriteBurst = FMC_WRITE_BURST_DISABLE;
   hsram1.Init.ContinuousClock = FMC_CONTINUOUS_CLOCK_SYNC_ONLY;
-  hsram1.Init.WriteFifo = FMC_WRITE_FIFO_DISABLE;
+  hsram1.Init.WriteFifo = FMC_WRITE_FIFO_ENABLE;
   hsram1.Init.PageSize = FMC_PAGE_SIZE_NONE;
   /* Timing */
-  Timing.AddressSetupTime = 1;
-  Timing.AddressHoldTime = 1;
+  Timing.AddressSetupTime = 0;
+  Timing.AddressHoldTime = 0;
   Timing.DataSetupTime = 5;
-  Timing.BusTurnAroundDuration = 1;
+  Timing.BusTurnAroundDuration = 0;
   Timing.CLKDivision = 16;
   Timing.DataLatency = 17;
   Timing.AccessMode = FMC_ACCESS_MODE_A;
   /* ExtTiming */
-  ExtTiming.AddressSetupTime = 1;
-  ExtTiming.AddressHoldTime = 1;
-  ExtTiming.DataSetupTime = 1;
-  ExtTiming.BusTurnAroundDuration = 1;
+  ExtTiming.AddressSetupTime = 0;
+  ExtTiming.AddressHoldTime = 0;
+  ExtTiming.DataSetupTime = 0;
+  ExtTiming.BusTurnAroundDuration = 0;
   ExtTiming.CLKDivision = 16;
   ExtTiming.DataLatency = 17;
   ExtTiming.AccessMode = FMC_ACCESS_MODE_A;
