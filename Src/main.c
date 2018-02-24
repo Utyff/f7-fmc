@@ -42,6 +42,8 @@
 /* USER CODE BEGIN Includes */
 #include <stdlib.h>
 #include <delay.h>
+#include <draw.h>
+#include <DataBuffer.h>
 #include "lcd.h"
 /* USER CODE END Includes */
 
@@ -107,22 +109,31 @@ int main(void)
   /* USER CODE BEGIN 2 */
   DWT_Init();
   LCD_Init();
+//  HAL_ADC_Start_DMA();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+
+  for(u8 i=0; i<240; i++) {
+      buf[i] = i;
+      buf[479-i]= i;
+  }
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wmissing-noreturn"
+
   while (1)
   {
+    drawScreen();
+
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-    int rnd = random() & 3;
-    if(rnd == 0)  HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
-    rnd = random() & 3;
-    if(rnd == 0)  HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-    rnd = random() & 3;
-    if(rnd == 0)  HAL_GPIO_TogglePin(LD3_GPIO_Port, LD3_Pin);
-    delay_ms(100);
+    if((random() & 7) < 2)  HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
+    if((random() & 7) < 2)  HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+    if((random() & 7) < 2)  HAL_GPIO_TogglePin(LD3_GPIO_Port, LD3_Pin);
+    delay_ms(50);
   }
   /* USER CODE END 3 */
 
@@ -203,8 +214,8 @@ static void MX_ADC1_Init(void)
   hadc1.Instance = ADC1;
   hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV4;
   hadc1.Init.Resolution = ADC_RESOLUTION_8B;
-  hadc1.Init.ScanConvMode = DISABLE;
-  hadc1.Init.ContinuousConvMode = DISABLE;
+  hadc1.Init.ScanConvMode = ENABLE;
+  hadc1.Init.ContinuousConvMode = ENABLE;
   hadc1.Init.DiscontinuousConvMode = DISABLE;
   hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
   hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
@@ -270,18 +281,18 @@ static void MX_FMC_Init(void)
   hsram1.Init.WriteFifo = FMC_WRITE_FIFO_ENABLE;
   hsram1.Init.PageSize = FMC_PAGE_SIZE_NONE;
   /* Timing */
-  Timing.AddressSetupTime = 0;
+  Timing.AddressSetupTime = 3;
   Timing.AddressHoldTime = 15;
-  Timing.DataSetupTime = 5;
-  Timing.BusTurnAroundDuration = 0;
+  Timing.DataSetupTime = 8;
+  Timing.BusTurnAroundDuration = 3;
   Timing.CLKDivision = 16;
   Timing.DataLatency = 17;
   Timing.AccessMode = FMC_ACCESS_MODE_A;
   /* ExtTiming */
-  ExtTiming.AddressSetupTime = 0;
+  ExtTiming.AddressSetupTime = 3;
   ExtTiming.AddressHoldTime = 15;
-  ExtTiming.DataSetupTime = 1;
-  ExtTiming.BusTurnAroundDuration = 0;
+  ExtTiming.DataSetupTime = 3;
+  ExtTiming.BusTurnAroundDuration = 3;
   ExtTiming.CLKDivision = 16;
   ExtTiming.DataLatency = 17;
   ExtTiming.AccessMode = FMC_ACCESS_MODE_A;
