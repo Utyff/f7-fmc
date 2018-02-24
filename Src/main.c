@@ -107,9 +107,11 @@ int main(void)
   MX_FMC_Init();
   MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
+
   DWT_Init();
   LCD_Init();
-//  HAL_ADC_Start_DMA();
+  HAL_ADC_Start_DMA(&hadc1, (uint32_t *)buf, BUF_SIZE);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -126,7 +128,6 @@ int main(void)
   while (1)
   {
     drawScreen();
-
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
@@ -221,7 +222,7 @@ static void MX_ADC1_Init(void)
   hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
   hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
   hadc1.Init.NbrOfConversion = 1;
-  hadc1.Init.DMAContinuousRequests = DISABLE;
+  hadc1.Init.DMAContinuousRequests = ENABLE;
   hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
   if (HAL_ADC_Init(&hadc1) != HAL_OK)
   {

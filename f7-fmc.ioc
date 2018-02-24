@@ -2,7 +2,7 @@
 ADC1.Channel-4\#ChannelRegularConversion=ADC_CHANNEL_12
 ADC1.ClockPrescaler=ADC_CLOCK_SYNC_PCLK_DIV4
 ADC1.ContinuousConvMode=ENABLE
-ADC1.DMAContinuousRequests=DISABLE
+ADC1.DMAContinuousRequests=ENABLE
 ADC1.DataAlign=ADC_DATAALIGN_RIGHT
 ADC1.DiscontinuousConvMode=DISABLE
 ADC1.EOCSelection=ADC_EOC_SINGLE_CONV
