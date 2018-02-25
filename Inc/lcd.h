@@ -2,14 +2,9 @@
 #define __LCD_H
 
 #include "stm32f7xx_hal.h"
-//#include "stm32f7xx.h"
-
-//#include "stm32f7xx_conf.h"
 #include "core_cm7.h"
 #include "system_stm32f7xx.h"
-#include <stdint.h>
-//#include "sys.h"
-//#include "stdlib.h"
+//#include <stdint.h>
 
 //////////////////////////////////////////////////////////////////////////////////
 // STM32F4 Project Template - library function version

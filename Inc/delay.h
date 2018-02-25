@@ -8,7 +8,8 @@ extern "C" {
 #endif
 
 //void delay_us(uint32_t us);
-#define delay_us(us) DWT_Delay(us)
+#define delay_dwt(dwt) DWT_Delay_tics(dwt)
+#define delay_us(us) DWT_Delay_us(us)
 #define delay_ms(ms) DWT_Delay_ms(ms)
 //void Delay(__IO uint32_t nTime);
 

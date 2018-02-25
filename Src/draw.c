@@ -24,10 +24,10 @@ void drawFrame() {
 
 void drawGraph() {
     POINT_COLOR = CYAN;
-    for (u16 i = 0; i < MAX_X; i++) {
+    for (u16 i = 1; i < MAX_X; i++) {
         //LCD_DrawPoint(i, buf[i]);
-        LCD_Fast_DrawPoint(i, buf[i], CYAN);
-        //LCD_DrawLine(i - (u16) 1, buf[i - 1], i, buf[i]);
+        //LCD_Fast_DrawPoint(i, buf[i], CYAN);
+        LCD_DrawLine(i - (u16) 1, buf[i - 1], i, buf[i]);
     }
 }
 

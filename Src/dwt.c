@@ -35,7 +35,7 @@ void DWT_Init() {
 }
 
 
-void DWT_Delay(uint32_t us) // microseconds
+void DWT_Delay_us(uint32_t us) // microseconds
 {
     uint32_t t0 = DWT_Get();
     uint32_t delta = us * DWT_IN_MICROSEC;
@@ -43,10 +43,16 @@ void DWT_Delay(uint32_t us) // microseconds
     while (DWT_GetDelta(t0) < delta) {}
 }
 
+void DWT_Delay_tics(uint32_t tics) // microseconds
+{
+    uint32_t t0 = DWT_Get();
+    while (DWT_GetDelta(t0) < tics) {}
+}
+
 
 inline void DWT_Delay_ms(uint32_t ms)  // milliseconds
 {
-    DWT_Delay(ms * 1000);
+    DWT_Delay_us(ms * 1000);
 }
 
 

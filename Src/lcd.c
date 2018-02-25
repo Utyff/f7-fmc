@@ -143,7 +143,8 @@ u16 LCD_BGR2RGB(u16 c) {
 // When mdk -O1 time optimization needs to be set
 // Delay i
 void opt_delay(u8 i) {
-    while (i--);
+    //while (i--);
+    delay_dwt(i);
 }
 
 // Reads a color value of a point
@@ -720,7 +721,7 @@ void LCD_Clear(u16 color) {
     LCD_WriteRAM_Prepare();            // start writing GRAM
     for (index = 0; index < totalpoint; index++) {
         LCD->LCD_RAM = color;
-        opt_delay(8);
+        delay_dwt(8);
     }
 
     // count time for one circle
