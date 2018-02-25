@@ -1,6 +1,5 @@
 #include "draw.h"
 #include "DataBuffer.h"
-#include "lcd.h"
 
 
 void drawFrame() {
