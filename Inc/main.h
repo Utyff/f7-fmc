@@ -53,12 +53,12 @@
 #define BTN1_GPIO_Port GPIOC
 #define MCO_Pin GPIO_PIN_0
 #define MCO_GPIO_Port GPIOH
+#define TIM1_CH2N_Pin GPIO_PIN_0
+#define TIM1_CH2N_GPIO_Port GPIOB
 #define LD3_Pin GPIO_PIN_14
 #define LD3_GPIO_Port GPIOB
 #define TIM1_CH1_Pin GPIO_PIN_8
 #define TIM1_CH1_GPIO_Port GPIOA
-#define TIM1_CH2_Pin GPIO_PIN_9
-#define TIM1_CH2_GPIO_Port GPIOA
 #define TMS_Pin GPIO_PIN_13
 #define TMS_GPIO_Port GPIOA
 #define TCK_Pin GPIO_PIN_14
