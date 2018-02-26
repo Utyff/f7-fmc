@@ -1,5 +1,5 @@
 #include "draw.h"
-#include "DataBuffer.h"
+#include "graph.h"
 
 
 void drawFrame() {
@@ -19,15 +19,6 @@ void drawFrame() {
         if (x == 160) POINT_COLOR = GRAY;  // Drawing pen color
         else POINT_COLOR = DARKGRAY;
         LCD_DrawLine(x, 0, x, MAX_Y);
-    }
-}
-
-void drawGraph() {
-    POINT_COLOR = CYAN;
-    for (u16 i = 1; i < MAX_X; i++) {
-        //LCD_DrawPoint(i, buf[i]);
-        //LCD_Fast_DrawPoint(i, buf[i], CYAN);
-        LCD_DrawLine(i - (u16) 1, buf[i - 1], i, buf[i]);
     }
 }
 
