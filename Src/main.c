@@ -40,10 +40,7 @@
 #include "stm32f7xx_hal.h"
 
 /* USER CODE BEGIN Includes */
-#include <stdlib.h>
-#include <delay.h>
-#include <draw.h>
-#include <DataBuffer.h>
+#include <my_main.h>
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -114,19 +111,8 @@ int main(void)
   MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
 
-  DWT_Init();
-  LCD_Init();
-  HAL_ADC_Start_DMA(&hadc1, (uint32_t *)buf, BUF_SIZE);
-//  HAL_TIM_Base_Start(&htim1);
+    myMainInitialize();
 
-/* CLK  216 mHz
- * PRE        21600 => 10 kHz
- * COUNT PER  10 000 => 1Hz
- * PRE        215 => 1000 kHz
- * COUNT PER  99 => 10 kHz
- */
-  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
-//  HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_2);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -142,14 +128,10 @@ int main(void)
 
   while (1)
   {
-    drawScreen();
+    myMainCycle();
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-    if((random() & 7) < 3)  HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
-    if((random() & 7) < 3)  HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-    if((random() & 7) < 3)  HAL_GPIO_TogglePin(LD3_GPIO_Port, LD3_Pin); //*/
-    delay_ms(100);
   }
   /* USER CODE END 3 */
 
