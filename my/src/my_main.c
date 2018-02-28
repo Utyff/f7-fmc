@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <delay.h>
 #include <draw.h>
+#include <keys.h>
 #include <DataBuffer.h>
 
 
@@ -23,6 +24,7 @@ void myMainInitialize() {
 
 void myMainCycle() {
     drawScreen();
+    KEYS_scan();
 
     if((random() & 7) < 3)  HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
     if((random() & 7) < 3)  HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
