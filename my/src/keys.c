@@ -1,8 +1,8 @@
 #include "keys.h"
-#include "main.h"
+//#include "main.h"
 
 
-#define DEBOUNCING_CNT 1
+#define DEBOUNCING_CNT 0
 
 uint8_t button1Count = 0;
 uint8_t button2Count = 0;
@@ -26,10 +26,10 @@ void KEYS_init() {
     GPIO_Init(BTN1_PORT, &GPIO_InitStructure); */
 }
 
-// TODO REMOVE IT
+/*/ TODO REMOVE IT
 #define ENC1_Pin 0x1
 #define ENC2_Pin 0x2
-#define ENC_GPIO_Port GPIOC
+#define ENC_GPIO_Port GPIOC //*/
 
 /*  encoder states transitions
 new  old  action
@@ -56,7 +56,7 @@ new  old  action
 
 int16_t ENC_Scan() {
     // if encoder change state
-    uint16_t new_enc_state = (uint16_t)(ENC_GPIO_Port->IDR) & (uint16_t)(ENC1_Pin | ENC2_Pin);
+    uint16_t new_enc_state = (uint16_t)(ENC1_GPIO_Port->IDR) & (uint16_t)(ENC1_Pin | ENC2_Pin);
     if ( new_enc_state != enc_state ) {
         uint16_t transition = enc_state | (new_enc_state<<2);
         enc_state = new_enc_state;
@@ -86,17 +86,17 @@ void KEYS_scan() {
     }
 
     // if button1 change state
-    if ((BTN1_GPIO_Port->IDR & BTN1_Pin) != btns_state & BUTTON1) {
+    if ((BTN1_GPIO_Port->IDR & BTN1_Pin) != (btns_state & BUTTON1) ) {
         debounceCnt = DEBOUNCING_CNT;
         btns_state ^= BUTTON1;
-        if (btns_state & BUTTON1 != 0) {
+        if ((btns_state & BUTTON1) != 0) {
             button1Count++;
         }
     }
 
     // if encoder has step - do it
-    int16_t step = ENC_Scan();
-    if (step == 0) return;
+/*    int16_t step = ENC_Scan();
+    if (step == 0) return; //*/
 
     // choose type of encoder action
     int8_t action = button1Count % (int8_t) 3;

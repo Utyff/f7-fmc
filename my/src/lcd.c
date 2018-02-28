@@ -706,8 +706,7 @@ void LCD_Clear(u16 color) {
  //   u32 t0 = DWT_Get_Current_Tick();
 
     u32 index = 0;
-    u32 totalpoint = lcddev.width;
-    totalpoint *= lcddev.height;            // get the total number of points
+    u32 totalpoint = lcddev.width * lcddev.height; // get the total number of points
     if ((lcddev.id == 0X6804) && (lcddev.dir == 1))// 6804 horizontal screen when special treatment
     {
         lcddev.dir = 0;
@@ -721,7 +720,7 @@ void LCD_Clear(u16 color) {
     LCD_WriteRAM_Prepare();            // start writing GRAM
     for (index = 0; index < totalpoint; index++) {
         LCD->LCD_RAM = color;
-        delay_dwt(8);
+        delay_dwt(1);
     }
 
     // count time for one circle
@@ -754,9 +753,11 @@ void LCD_Fill(u16 sx, u16 sy, u16 ex, u16 ey, u16 color) {
     } else {
         xlen = ex - sx + 1;
         for (i = sy; i <= ey; i++) {
-            LCD_SetCursor(sx, i);                    // set the cursor position
-            LCD_WriteRAM_Prepare();                // start writing GRAM
-            for (j = 0; j < xlen; j++)LCD->LCD_RAM = color;    // display colors
+            LCD_SetCursor(sx, i);         // set the cursor position
+            LCD_WriteRAM_Prepare();       // start writing GRAM
+            for (j = 0; j < xlen; j++) {  // display colors
+              LCD->LCD_RAM = color;
+            }
         }
     }
 }

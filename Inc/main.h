@@ -67,6 +67,10 @@
 #define SW0_GPIO_Port GPIOB
 #define LD2_Pin GPIO_PIN_7
 #define LD2_GPIO_Port GPIOB
+#define ENC1_Pin GPIO_PIN_0
+#define ENC1_GPIO_Port GPIOE
+#define ENC2_Pin GPIO_PIN_1
+#define ENC2_GPIO_Port GPIOE
 
 /* ########################## Assert Selection ############################## */
 /**

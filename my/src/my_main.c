@@ -30,6 +30,8 @@ void myMainCycle() {
     if((random() & 7) < 3)  HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
     if((random() & 7) < 3)  HAL_GPIO_TogglePin(LD3_GPIO_Port, LD3_Pin); //*/
 
-    delay_ms(100);
+    LCD_ShowxNum(30, 214, (u32) button1Count, 5, 12, 0x0);
+
+    delay_ms(50);
 
 }
