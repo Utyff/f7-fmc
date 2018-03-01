@@ -580,16 +580,16 @@ void LCD_Init(void) {
     {
         // Try to read the 9341 ID
         LCD_WR_REG(0XD3);
-        lcddev.id = LCD_RD_DATA();    //dummy read
+        lcddev.id = LCD_RD_DATA();    // dummy read
         lcddev.id = LCD_RD_DATA();    // Read 0X00
         lcddev.id = LCD_RD_DATA();    // Read 93
         lcddev.id <<= 8;
-        lcddev.id |= LCD_RD_DATA();    // Read 41
-        if (lcddev.id != 0X9341)        // 9341 Non-try is not 6804
-        {
-            return;
-//            _Error_Handler(__FILE__, __LINE__);
+        lcddev.id |= LCD_RD_DATA();   // Read 41
+        if (lcddev.id != 0X9341)  {   // 9341 Non-try is not 6804
+            _Error_Handler(__FILE__, __LINE__);
         }
+    } else {
+        _Error_Handler(__FILE__, __LINE__);
     }
 
 //	printf(" LCD ID:%x\r\n",lcddev.id); // print LCD ID
@@ -692,8 +692,8 @@ void LCD_Init(void) {
     {
         _Error_Handler(__FILE__, __LINE__);
     }
-    LCD_Display_Dir(1);            // default to portrait
-//	LCD_LED=1;					// lit backlight
+    LCD_Display_Dir(1);  // default to portrait
+//	LCD_LED=1;           // lit backlight
     LCD_Clear(GREEN);
 }
 
@@ -712,12 +712,12 @@ void LCD_Clear(u16 color) {
         lcddev.dir = 0;
         lcddev.setxcmd = 0X2A;
         lcddev.setycmd = 0X2B;
-        LCD_SetCursor(0x00, 0x0000);        // set the cursor position
+        LCD_SetCursor(0x00, 0x0000);      // set the cursor position
         lcddev.dir = 1;
         lcddev.setxcmd = 0X2B;
         lcddev.setycmd = 0X2A;
-    } else LCD_SetCursor(0x00, 0x0000);    // set the cursor position
-    LCD_WriteRAM_Prepare();            // start writing GRAM
+    } else LCD_SetCursor(0x00, 0x0000);   // set the cursor position
+    LCD_WriteRAM_Prepare();               // start writing GRAM
     for (index = 0; index < totalpoint; index++) {
         LCD->LCD_RAM = color;
         delay_dwt(1);
@@ -769,9 +769,9 @@ void LCD_Color_Fill(u16 sx, u16 sy, u16 ex, u16 ey, u16 *color) {
     u16 height, width;
     u16 i, j;
     width = ex - sx + 1;            // get filled width
-    height = ey - sy + 1;            // height
+    height = ey - sy + 1;           // height
     for (i = 0; i < height; i++) {
-        LCD_SetCursor(sx, sy + i);    // set the cursor position
+        LCD_SetCursor(sx, sy + i);  // set the cursor position
         LCD_WriteRAM_Prepare();     // start writing GRAM
         for (j = 0; j < width; j++)LCD->LCD_RAM = color[i * width + j];// write data
     }

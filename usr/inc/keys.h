@@ -3,7 +3,7 @@
 
 #include "stm32f7xx_hal.h"
 
-
+// buttons bits
 #define BUTTON1 0x01
 #define BUTTON2 0x02
 #define BUTTON3 0x04
@@ -15,6 +15,7 @@ extern uint8_t button3Count;
 extern uint16_t btns_state;
 
 void KEYS_init();
+
 void KEYS_scan();
 
 #endif //KEYS_H
