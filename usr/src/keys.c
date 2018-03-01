@@ -1,5 +1,5 @@
 #include "keys.h"
-
+#include "stdio.h"
 
 #define DEBOUNCING_CNT 0
 
@@ -40,6 +40,7 @@ new  old  action
 int16_t ENC_Scan() {
     // if encoder change state
     uint16_t new_enc_state = (uint16_t) (ENC1_GPIO_Port->IDR) & (uint16_t) (ENC1_Pin | ENC2_Pin);
+    //printf("enc - %x", enc_state);
     if (new_enc_state != enc_state) {
         uint16_t transition = enc_state | (new_enc_state << 2);
         enc_state = new_enc_state;
@@ -70,8 +71,10 @@ void KEYS_scan() {
         return;
     }
 
+    uint32_t st = (BTN1_GPIO_Port->IDR & BTN1_Pin) >> 13;
+    //printf("enc - %x", st);
     // if button1 change state
-    if ((BTN1_GPIO_Port->IDR & BTN1_Pin) != (btns_state & BUTTON1)) {
+    if (st != (btns_state & BUTTON1)) {
         debounceCnt = DEBOUNCING_CNT;
         btns_state ^= BUTTON1;
         if ((btns_state & BUTTON1) != 0) {
@@ -80,7 +83,7 @@ void KEYS_scan() {
     }
 
     // if encoder has step - do it
-/*    int16_t step = ENC_Scan();
+    /*int16_t step = ENC_Scan();
     if (step == 0) return; //*/
 
     // choose type of encoder action

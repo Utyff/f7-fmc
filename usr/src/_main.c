@@ -9,7 +9,12 @@
 void mainInitialize() {
     DWT_Init();
     LCD_Init();
-    HAL_ADC_Start_DMA(&hadc1, (uint32_t *) buf, BUF_SIZE);
+    //HAL_ADC_Start_DMA(&hadc1, (uint32_t *) buf, BUF_SIZE);
+
+    /*for (u8 i = 0; i < 240; i++) {
+        buf[i] = i;
+        buf[479 - i] = i;
+    } //*/
 
 /* CLK  216 mHz
  * PRE        21600 => 10 kHz
@@ -32,4 +37,9 @@ void mainCycle() {
     LCD_ShowxNum(30, 214, (u32) button1Count, 5, 12, 0x0);
 
     delay_ms(50);
+}
+
+int __io_putchar(int ch) {
+    ITM_SendChar(ch);
+    return (ch);
 }
