@@ -9,7 +9,7 @@
 void mainInitialize() {
     DWT_Init();
     LCD_Init();
-    //HAL_ADC_Start_DMA(&hadc1, (uint32_t *) buf, BUF_SIZE);
+    HAL_ADC_Start_DMA(&hadc1, (uint32_t *) buf, BUF_SIZE);
 
     /*for (u8 i = 0; i < 240; i++) {
         buf[i] = i;
@@ -24,6 +24,9 @@ void mainInitialize() {
  */
     HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
 //  HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_2);
+
+    char *msg = "Hello Nucleo Fun!\n\r";
+    HAL_UART_Transmit(&huart1, (uint8_t*)msg, 10, 0xFFFF);
 }
 
 void mainCycle() {
@@ -37,9 +40,4 @@ void mainCycle() {
     LCD_ShowxNum(30, 214, (u32) button1Count, 5, 12, 0x0);
 
     delay_ms(50);
-}
-
-int __io_putchar(int ch) {
-    ITM_SendChar(ch);
-    return (ch);
 }

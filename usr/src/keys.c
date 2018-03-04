@@ -1,5 +1,4 @@
 #include "keys.h"
-#include "stdio.h"
 
 #define DEBOUNCING_CNT 0
 
@@ -72,7 +71,6 @@ void KEYS_scan() {
     }
 
     uint32_t st = (BTN1_GPIO_Port->IDR & BTN1_Pin) >> 13;
-    //printf("enc - %x", st);
     // if button1 change state
     if (st != (btns_state & BUTTON1)) {
         debounceCnt = DEBOUNCING_CNT;
