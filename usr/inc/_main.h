@@ -6,6 +6,7 @@
 extern ADC_HandleTypeDef hadc1;
 extern DMA_HandleTypeDef hdma_adc1;
 extern TIM_HandleTypeDef htim1;
+extern TIM_HandleTypeDef htim8;
 extern SRAM_HandleTypeDef hsram1;
 extern UART_HandleTypeDef huart1;
 

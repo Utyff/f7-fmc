@@ -1,6 +1,11 @@
+#include <_main.h>
 #include "keys.h"
 
 #define DEBOUNCING_CNT 0
+#define MAX_ENCODER    63  // max encoder value
+#define MID_ENCODER    32
+#define ENCODER_STEP   4   // counts per step
+#define ENCODER_TIM    TIM8
 
 uint8_t button1Count = 0;
 uint8_t button2Count = 0;
@@ -11,6 +16,7 @@ static uint16_t debounceCnt = 0;
 
 
 void KEYS_init() {
+    ENCODER_TIM->CNT = MID_ENCODER;
 }
 
 /*  encoder states transitions
@@ -36,29 +42,22 @@ new  old  action
 11   11    skip
 */
 
-int16_t ENC_Scan() {
-    // if encoder change state
-    uint16_t new_enc_state = (uint16_t) (ENC1_GPIO_Port->IDR) & (uint16_t) (ENC1_Pin | ENC2_Pin);
-    //printf("enc - %x", enc_state);
-    if (new_enc_state != enc_state) {
-        uint16_t transition = enc_state | (new_enc_state << 2);
-        enc_state = new_enc_state;
-        switch (transition) {
-            case 0b0001:
-            case 0x0111:
-            case 0x1000:
-            case 0x1110:
-                return +1;
-            case 0x0010:
-            case 0x0100:
-            case 0x1011:
-            case 0x1101:
-                return -1;
-            default:
-                Error_Handler();
-        }
+char *ENC_ERR = "Encoder error\n\r";
+
+
+int16_t ENC_Get() {
+    int16_t result = 0;
+
+    int16_t step = (int16_t) (ENCODER_TIM->CNT - MID_ENCODER);
+    if (step >= ENCODER_STEP || step <= -ENCODER_STEP) {
+        result = step / (int16_t) ENCODER_STEP;
+
+        __disable_irq();
+        ENCODER_TIM->CNT -= result * ENCODER_STEP;
+        __enable_irq();
     }
-    return 0;
+
+    return result;
 }
 
 /**
@@ -81,8 +80,9 @@ void KEYS_scan() {
     }
 
     // if encoder has step - do it
-    /*int16_t step = ENC_Scan();
-    if (step == 0) return; //*/
+    int16_t step = ENC_Get();
+    if (step == 0) return;
+    HAL_UART_Transmit(&huart1,(uint8_t*)&step, 2, 0xffff);
 
     // choose type of encoder action
     int8_t action = button1Count % (int8_t) 3;

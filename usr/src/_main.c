@@ -24,6 +24,8 @@ void mainInitialize() {
  */
     HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
 //  HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_2);
+    HAL_TIM_Encoder_Start(&htim8, TIM_CHANNEL_1);
+    KEYS_init();
 
     char *msg = "Hello Nucleo Fun!\n\r";
     HAL_UART_Transmit(&huart1, (uint8_t*)msg, 10, 0xFFFF);
@@ -37,6 +39,7 @@ void mainCycle() {
     if ((random() & 7) < 3) HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
     if ((random() & 7) < 3) HAL_GPIO_TogglePin(LD3_GPIO_Port, LD3_Pin);
 
+    LCD_ShowxNum(0, 214, TIM8->CNT, 5, 12, 0x0);
     LCD_ShowxNum(30, 214, (u32) button1Count, 5, 12, 0x0);
 
     delay_ms(50);

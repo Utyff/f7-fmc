@@ -15,7 +15,7 @@ extern uint8_t button3Count;
 extern uint16_t btns_state;
 
 void KEYS_init();
-
 void KEYS_scan();
+int16_t ENC_Get();
 
 #endif //KEYS_H

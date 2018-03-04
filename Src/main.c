@@ -343,11 +343,11 @@ static void MX_TIM8_Init(void)
   sConfig.IC1Polarity = TIM_ICPOLARITY_RISING;
   sConfig.IC1Selection = TIM_ICSELECTION_DIRECTTI;
   sConfig.IC1Prescaler = TIM_ICPSC_DIV1;
-  sConfig.IC1Filter = 0;
+  sConfig.IC1Filter = 6;
   sConfig.IC2Polarity = TIM_ICPOLARITY_RISING;
   sConfig.IC2Selection = TIM_ICSELECTION_DIRECTTI;
   sConfig.IC2Prescaler = TIM_ICPSC_DIV1;
-  sConfig.IC2Filter = 0;
+  sConfig.IC2Filter = 6;
   if (HAL_TIM_Encoder_Init(&htim8, &sConfig) != HAL_OK)
   {
     _Error_Handler(__FILE__, __LINE__);
@@ -485,12 +485,6 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : ENC1_Pin ENC2_Pin */
-  GPIO_InitStruct.Pin = ENC1_Pin|ENC2_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_PULLUP;
-  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
 }
 
