@@ -6,6 +6,6 @@
 #define BUF_SIZE 2048
 extern u8 buf[BUF_SIZE];
 
-extern u8 firstHalf;
+extern u8 firstHalf; // first or second half of buffer writing
 
 #endif //_DATABUFFER_H

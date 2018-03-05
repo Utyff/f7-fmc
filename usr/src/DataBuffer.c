@@ -3,4 +3,4 @@
 
 u8 buf[BUF_SIZE];
 
-u8 firstHalf = 1;
+u8 firstHalf = 0;
