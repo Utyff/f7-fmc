@@ -47,7 +47,7 @@ void buildGraph1ch() {
     int i, j;
     float x;
 
-    u8 *samples = buf;
+    u8 *samples = samplesBuffer;
     if (firstHalf != 0) samples += BUF_SIZE / 2;
 
     x = 0;
