@@ -70,128 +70,6 @@ u16 BACK_COLOR = 0xFFFF;  // background color
 // Default to portrait
 _lcd_dev lcddev;
 
-// Write register function
-//regval: register value
-void LCD_WR_REG(vu16 regval) {
-    regval = regval;        // Use -O2 optimization, you must insert delay
-    LCD->LCD_REG = regval;  // write to write register number
-    delay_us(1);
-}
-
-// Write LCD data
-//data: value to be written
-void LCD_WR_DATA(vu16 data) {
-    data = data;            // Use -O2 optimization, you must insert delay
-    LCD->LCD_RAM = data;
-    delay_us(1);
-}
-
-// Read LCD data
-// Return Value: Value read
-u16 LCD_RD_DATA(void) {
-    vu16 ram;            // Prevent Optimization
-//    delay_us(5);
-    ram = LCD->LCD_RAM;
-    return ram;
-}
-
-// Write register
-//LCD_Reg: Register Address
-//LCD_RegValue: data to be written
-void LCD_WriteReg(vu16 LCD_Reg, vu16 LCD_RegValue) {
-    LCD->LCD_REG = LCD_Reg;        // Write to write register number  
-//    delay_us(1);
-    LCD->LCD_RAM = LCD_RegValue;// write data        
-//    delay_us(5);
-}
-
-// Read register
-//LCD_Reg: Register Address
-// Return Value: read data
-u16 LCD_ReadReg(vu16 LCD_Reg) {
-    LCD_WR_REG(LCD_Reg);        // Write the register number to be read
-//    delay_us(5);
-    return LCD_RD_DATA();        // Return value read
-}
-
-// Start writing GRAM
-void LCD_WriteRAM_Prepare(void) {
-    LCD->LCD_REG = lcddev.wramcmd;
-//    delay_us(1);
-}
-
-//LCD write GRAM
-//RGB_Code: color values
-void LCD_WriteRAM(u16 RGB_Code) {
-    LCD->LCD_RAM = RGB_Code;// write sixteen GRAM
-    delay_us(15);
-}
-
-// Data is read out from the ILI93xx GBR format, and when we write to RGB format.
-// This function by converting
-//c: color values GBR format
-// Return Value: RGB color value format
-u16 LCD_BGR2RGB(u16 c) {
-    u16 r, g, b, rgb;
-    b = (c >> 0) & 0x1f;
-    g = (c >> 5) & 0x3f;
-    r = (c >> 11) & 0x1f;
-    rgb = (b << 11) + (g << 5) + (r << 0);
-    return (rgb);
-}
-
-// When mdk -O1 time optimization needs to be set
-// Delay i
-void opt_delay(u8 i) {
-    //while (i--);
-    delay_dwt(i);
-}
-
-// Reads a color value of a point
-//x,y: coordinates
-// Return Value: The color of this point
-u16 LCD_ReadPoint(u16 x, u16 y) {
-    vu16 r = 0, g = 0, b = 0;
-    if (x >= lcddev.width || y >= lcddev.height)return 0;    // Beyond the scope of direct return
-    LCD_SetCursor(x, y);
-    if (lcddev.id == 0X9341 || lcddev.id == 0X6804 || lcddev.id == 0X5310)
-        LCD_WR_REG(0X2E);//9341/6804/3510 sends a read command GRAM
-    else if (lcddev.id == 0X5510)LCD_WR_REG(0X2E00);    // 5510 sends a read command GRAM
-    else LCD_WR_REG(R34);                            // Other IC sends a read command GRAM
-    if (lcddev.id == 0X9320)opt_delay(2);                //FOR 9320, delay 2us
-    LCD_RD_DATA();                                    //dummy Read
-    opt_delay(2);
-    r = LCD_RD_DATA();                                // Actual color coordinate
-    if (lcddev.id == 0X9341 || lcddev.id == 0X5310 || lcddev.id == 0X5510)        //9341/NT35310/NT35510 to read 2 times
-    {
-        opt_delay(2);
-        b = LCD_RD_DATA();
-        g = r & 0XFF;        // For 9341/5310/5510, first read is the value of RG, R front, G in after each eight
-        g <<= 8;
-    }
-    if (lcddev.id == 0X9325 || lcddev.id == 0X4535 || lcddev.id == 0X4531 || lcddev.id == 0XB505 ||
-        lcddev.id == 0XC505)
-        return r;    // This returns the color values of several IC directly
-    else if (lcddev.id == 0X9341 || lcddev.id == 0X5310 || lcddev.id == 0X5510)
-        return (((r >> 11) << 11) | ((g >> 10) << 5) | (b
-                >> 11));//ILI9341/NT35310/NT35510 need to change if the formula
-    else return LCD_BGR2RGB(r);                        // Other IC
-}
-
-// LCD display is turned
-void LCD_DisplayOn(void) {
-    if (lcddev.id == 0X9341 || lcddev.id == 0X6804 || lcddev.id == 0X5310)LCD_WR_REG(0X29);    // Turn on the display
-    else if (lcddev.id == 0X5510)LCD_WR_REG(0X2900);    // Turn on the display
-    else LCD_WriteReg(R7, 0x0173);                    // Turn on the display
-}
-
-// LCD display is turned off
-void LCD_DisplayOff(void) {
-    if (lcddev.id == 0X9341 || lcddev.id == 0X6804 || lcddev.id == 0X5310)LCD_WR_REG(0X28);    // Off the display
-    else if (lcddev.id == 0X5510)LCD_WR_REG(0X2800);    // Turn off the display
-    else LCD_WriteReg(R7, 0x0);// close the display
-}
-
 // Set the cursor position
 //Xpos: abscissa
 //Ypos: ordinate
@@ -576,8 +454,7 @@ void LCD_Init(void) {
     delay_ms(50); // delay 50 ms
     lcddev.id = LCD_ReadReg(0x0000);
     // read ID is not correct, the new lcddev.id==0X9300 judgment, because in 9341 has not been reset It will be read into the case of 9300
-    if (lcddev.id < 0XFF || lcddev.id == 0XFFFF || lcddev.id == 0X9300)
-    {
+    if (lcddev.id < 0XFF || lcddev.id == 0XFFFF || lcddev.id == 0X9300) {
         // Try to read the 9341 ID
         LCD_WR_REG(0XD3);
         lcddev.id = LCD_RD_DATA();    // dummy read
@@ -585,7 +462,7 @@ void LCD_Init(void) {
         lcddev.id = LCD_RD_DATA();    // Read 93
         lcddev.id <<= 8;
         lcddev.id |= LCD_RD_DATA();   // Read 41
-        if (lcddev.id != 0X9341)  {   // 9341 Non-try is not 6804
+        if (lcddev.id != 0X9341) {   // 9341 Non-try is not 6804
             return;
             //_Error_Handler(__FILE__, __LINE__);
         }
@@ -689,8 +566,7 @@ void LCD_Init(void) {
         LCD_WR_REG(0x11); //Exit Sleep
         delay_ms(120);
         LCD_WR_REG(0x29); //display on
-    } else
-    {
+    } else {
         _Error_Handler(__FILE__, __LINE__);
     }
     LCD_Display_Dir(1);  // default to portrait
@@ -704,7 +580,7 @@ u32 LCDClearTick;
 
 void LCD_Clear(u16 color) {
     // get start time
- //   u32 t0 = DWT_Get_Current_Tick();
+    //   u32 t0 = DWT_Get_Current_Tick();
 
     u32 index = 0;
     u32 totalpoint = lcddev.width * lcddev.height; // get the total number of points
@@ -726,7 +602,7 @@ void LCD_Clear(u16 color) {
 
     // count time for one circle
 //    LCDClearTick = DWT_Elapsed_Tick(t0);
-    POINT_COLOR = YELLOW;
+//    POINT_COLOR = YELLOW;
 //    LCD_ShowxNum(100,227, LCDClearTick/168, 8,12, 9);
 }
 
@@ -757,7 +633,7 @@ void LCD_Fill(u16 sx, u16 sy, u16 ex, u16 ey, u16 color) {
             LCD_SetCursor(sx, i);         // set the cursor position
             LCD_WriteRAM_Prepare();       // start writing GRAM
             for (j = 0; j < xlen; j++) {  // display colors
-              LCD->LCD_RAM = color;
+                LCD->LCD_RAM = color;
             }
         }
     }
