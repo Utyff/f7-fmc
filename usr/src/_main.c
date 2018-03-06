@@ -5,6 +5,7 @@
 #include <keys.h>
 #include <DataBuffer.h>
 #include <string.h>
+#include <fmc_dma.h>
 
 /* TIM1 Configuration
  * CLK  216 mHz
@@ -80,6 +81,7 @@ void mainInitialize() {
     HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
     HAL_TIM_Encoder_Start(&htim8, TIM_CHANNEL_1);
     KEYS_init();
+    initScreenBuf();
 
     CORECheck();
     FPUCheck();
