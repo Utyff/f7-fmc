@@ -6,6 +6,7 @@
 #include <DataBuffer.h>
 #include <string.h>
 #include <fmc_dma.h>
+#include <generator.h>
 
 /* TIM1 Configuration
  * CLK  216 mHz
@@ -79,6 +80,8 @@ void mainInitialize() {
     HAL_ADC_Start_DMA(&hadc1, (uint32_t *) samplesBuffer, BUF_SIZE);
 
     HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
+    GEN_setParams();
+
     HAL_TIM_Encoder_Start(&htim8, TIM_CHANNEL_1);
     KEYS_init();
     initScreenBuf();
