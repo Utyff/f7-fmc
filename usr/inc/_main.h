@@ -2,6 +2,7 @@
 #define __MAIN_H
 
 #include "stm32f7xx_hal.h"
+#include "main.h"
 
 typedef int32_t  s32;
 typedef int16_t s16;
@@ -21,6 +22,7 @@ extern TIM_HandleTypeDef htim1;
 extern TIM_HandleTypeDef htim8;
 extern SRAM_HandleTypeDef hsram1;
 extern UART_HandleTypeDef huart1;
+extern DMA_HandleTypeDef hdma_memtomem_dma2_stream1;
 
 void mainInitialize();
 void mainCycle();
