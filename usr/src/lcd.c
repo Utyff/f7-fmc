@@ -54,6 +54,37 @@ void LCD_Scan_Dir(u8 dir) {
     u16 temp;
     u16 xsize, ysize;
 
+    if (lcddev.dir == 1)// horizontal screen, without changing the scanning direction of 6804!
+    {
+        switch (dir)// direction change
+        {
+            case 0:
+                dir = 6;
+                break;
+            case 1:
+                dir = 7;
+                break;
+            case 2:
+                dir = 4;
+                break;
+            case 3:
+                dir = 5;
+                break;
+            case 4:
+                dir = 1;
+                break;
+            case 5:
+                dir = 0;
+                break;
+            case 6:
+                dir = 3;
+                break;
+            case 7:
+                dir = 2;
+                break;
+        }
+    }
+
     switch (dir) {
         case L2R_U2D:// from left to right, top to bottom
             regval |= (0 << 7) | (0 << 6) | (0 << 5);
@@ -81,18 +112,19 @@ void LCD_Scan_Dir(u8 dir) {
             break;
     }
 
+    regval |= 0X08; // RGB to BGR
     // dirreg = 0X36;
     LCD_WriteReg(0X36, regval);
 
     if ((regval & 0X20) || lcddev.dir == 1) {
-        if (lcddev.width < lcddev.height)// swap X,Y
+        if (lcddev.width < lcddev.height) // swap X,Y
         {
             temp = lcddev.width;
             lcddev.width = lcddev.height;
             lcddev.height = temp;
         }
     } else {
-        if (lcddev.width > lcddev.height)// swap X,Y
+        if (lcddev.width > lcddev.height) // swap X,Y
         {
             temp = lcddev.width;
             lcddev.width = lcddev.height;
@@ -121,7 +153,7 @@ void LCD_Scan_Dir(u8 dir) {
 void LCD_DrawPoint(u16 x, u16 y) {
     LCD_SetCursor(x, y);       // Set the cursor position
     LCD_WriteRAM_Prepare();    // Start writing GRAM
-    LCD->LCD_RAM = POINT_COLOR;
+    LCD_WR_DATA(POINT_COLOR);
 }
 
 // Draw the point fast
@@ -135,8 +167,8 @@ void LCD_Fast_DrawPoint(u16 x, u16 y, u16 color) {
     LCD_WR_DATA(y >> 8);
     LCD_WR_DATA(y & (u16) 0XFF);
 
-    LCD->LCD_REG = LCD_WR_RAM_CMD;
-    LCD->LCD_RAM = color;
+    LCD_WR_REG(LCD_WR_RAM_CMD);
+    LCD_WR_DATA(color);
 }
 
 
@@ -180,7 +212,6 @@ void LCD_Init(void) {
     } else {
         Error_Handler();
     }
-//	printf(" LCD ID:%x\r\n",lcddev.id); // print LCD ID
 
     LCD_WR_REG(0xCF);
     LCD_WR_DATA(0x00);
@@ -295,8 +326,7 @@ void LCD_Clear(u16 color) {
     LCD_WriteRAM_Prepare();  // start writing GRAM
 
     for (u32 i = 0; i < totalPoints; i++) {
-        LCD->LCD_RAM = color;
-//        delay_dwt(1);
+        LCD_WR_DATA(color);
     }
 
     u32 LCDClearTick = DWT_Elapsed_Tick(t0);
@@ -319,7 +349,7 @@ void LCD_Fill(u16 sx, u16 sy, u16 ex, u16 ey, u16 color) {
     LCD_Set_Window(sx, sy, ex, ey);          // set the cursor position
     LCD_WriteRAM_Prepare();                  // start writing GRAM
     for (int j = 0; j < totalPoints; j++) {  // display colors
-        LCD->LCD_RAM = color;
+        LCD_WR_DATA(color);
     }
 }
 
@@ -335,7 +365,7 @@ void LCD_drawBMP(u16 sx, u16 sy, u16 ex, u16 ey, const u16 *bmp) {
         LCD_SetCursor(sx, sy + i);  // set the cursor position
         LCD_WriteRAM_Prepare();     // start writing GRAM
         for (j = 0; j < width; j++) { // write data
-            LCD->LCD_RAM = bmp[i * width + j];
+            LCD_WR_DATA(bmp[i * width + j]);
         }
     }
 }

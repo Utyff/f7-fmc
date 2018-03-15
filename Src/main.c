@@ -1,3 +1,4 @@
+
 /**
   ******************************************************************************
   * @file           : main.c
@@ -519,6 +520,10 @@ void _Error_Handler(char *file, int line)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
+  char msg[200];
+  sprintf(msg, "\r\nError_Handler.\r\nFile: %s\r\nLine: %i\r\n", file, line);
+  DBG_Trace(msg);
+
   while(1)
   {
   }
