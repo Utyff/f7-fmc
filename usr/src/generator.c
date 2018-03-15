@@ -4,7 +4,7 @@
 /* F7
  * TIM1 Configuration
  * CLK  216 mHz
- * PRE           108 => 2 MHz
+ * PRE           107 => 2 MHz
  * COUNT PERIOD  99 => 20 KHz
  */
 
@@ -17,12 +17,12 @@ typedef struct GEN_param GEN_PARAM;
 
 #define GEN_Parameters_Size 6
 const GEN_PARAM GEN_Parameters[GEN_Parameters_Size] = {
-        {83, 19,  100000},
-        {83, 24,  80000},
-        {99, 27,  60000},
-        {83, 49,  40000},
-        {83, 99,  20000},
-        {83, 199, 10000}
+        {107, 19,  100000},
+        {107, 24,  80000},
+        {99,  35,  60000},
+        {107, 49,  40000},
+        {107, 99,  20000},
+        {107, 199, 10000}
 };
 
 int currentGenParam = 4;
@@ -66,7 +66,7 @@ void GEN_step(int16_t step) {
     GEN_setParams();
 
     sprintf(msg, "After step. param: %u, scale: %u, presc: %u, period: %u\n", currentGenParam, currentGenScale, tim1Prescaler, tim1Period);
-    DBG_Trace((uint8_t *) msg);
+    DBG_Trace(msg);
 }
 
 void GEN_setFreq() {
