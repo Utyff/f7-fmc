@@ -1,9 +1,7 @@
 #ifndef __DWT_H
 #define __DWT_H
 
-#include "stm32f7xx_hal.h"
-#include "core_cm7.h"
-#include "system_stm32f7xx.h"
+#include "_main.h"
 
 #ifdef __cplusplus
 extern "C" {

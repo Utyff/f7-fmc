@@ -55,14 +55,14 @@ uint16_t ScreenTime = 0;      // index in ScreenTimes
 uint16_t ScreenTime_adj = 0;  // 0-9 shift in ScreenTime
 const float ScreenTimes[] = {100, 200, 500, 1000, 2000, 5000, 10000, 20000};  // sweep screen, microseconds
 
-uint8_t sampleBuffer[2048];
-
 uint32_t ADCStartTick;         // time when start ADC buffer fill
 uint32_t ADCHalfElapsedTick;   // the last time half buffer fill
 uint32_t ADCElapsedTick;       // the last time buffer fill
 
-
-void ADC_set_parameters() {
+/**
+ * Copy of MX_ADC1_Init()
+ */
+void ADC_setParams() {
 
     ADC_ChannelConfTypeDef sConfig;
 
@@ -81,9 +81,7 @@ void ADC_set_parameters() {
     hadc1.Init.DMAContinuousRequests = ENABLE;
     hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
     if (HAL_ADC_Init(&hadc1) != HAL_OK)
-    {
-        _Error_Handler(__FILE__, __LINE__);
-    }
+        Error_Handler();
 
     /**Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
     */
@@ -93,8 +91,21 @@ void ADC_set_parameters() {
     if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
         Error_Handler();
 
+    HAL_ADC_Start_DMA(&hadc1, (uint32_t *) samplesBuffer, BUF_SIZE);
+
     ADCStartTick = DWT_Get_Current_Tick();
 }
+
+
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
+    firstHalf = 0;
+}
+
+
+void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef *hadc) {
+    firstHalf = 1;
+}
+
 
 void ADC_step_up() {
     if (ScreenTime_adj < 9)
@@ -147,7 +158,7 @@ void ADC_step(int16_t step) {
     // set X scale
     scaleX = ADC_Parameters[i].ScreenTime / time;
 
-    ADC_set_parameters();
+    ADC_setParams();
 }
 
 /*uint16_t ICount = 0;

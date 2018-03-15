@@ -1,7 +1,7 @@
 #ifndef __GRAPH_H
 #define __GRAPH_H
 
-#include "stm32f7xx_hal.h"
+#include "_main.h"
 #include "lcd.h"
 
 

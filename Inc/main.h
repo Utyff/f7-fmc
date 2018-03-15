@@ -53,10 +53,10 @@
 #define BTN1_GPIO_Port GPIOC
 #define MCO_Pin GPIO_PIN_0
 #define MCO_GPIO_Port GPIOH
-#define LD1_Pin GPIO_PIN_0
-#define LD1_GPIO_Port GPIOB
-#define LD3_Pin GPIO_PIN_14
-#define LD3_GPIO_Port GPIOB
+#define LED1_Pin GPIO_PIN_0
+#define LED1_GPIO_Port GPIOB
+#define LED3_Pin GPIO_PIN_14
+#define LED3_GPIO_Port GPIOB
 #define TIM1_CH1_Pin GPIO_PIN_8
 #define TIM1_CH1_GPIO_Port GPIOA
 #define TMS_Pin GPIO_PIN_13
@@ -65,8 +65,8 @@
 #define TCK_GPIO_Port GPIOA
 #define SW0_Pin GPIO_PIN_3
 #define SW0_GPIO_Port GPIOB
-#define LD2_Pin GPIO_PIN_7
-#define LD2_GPIO_Port GPIOB
+#define LED2_Pin GPIO_PIN_7
+#define LED2_GPIO_Port GPIOB
 
 /* ########################## Assert Selection ############################## */
 /**

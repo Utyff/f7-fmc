@@ -1,10 +1,7 @@
 #ifndef _LCD_FMC_H
 #define _LCD_FMC_H
 
-#include "stm32f7xx_hal.h"
-#include "core_cm7.h"
-#include "system_stm32f7xx.h"
-#include <_main.h>
+#include "_main.h"
 
 //////////////////////////////////////////////////////////////////////////////////
 //----------------- LCD port definition ----------------
@@ -27,12 +24,35 @@ typedef struct
 #define LCD             ((LCD_TypeDef *) LCD_BASE)
 //////////////////////////////////////////////////////////////////////////////////
 
-void LCD_WR_REG(vu16 regval);
-u16 LCD_RD_DATA(void);
-void LCD_WR_DATA(vu16 data);
-void LCD_WriteReg(u16 LCD_Reg, u16 LCD_RegValue);
-u16 LCD_ReadReg(u16 LCD_Reg);
-void LCD_WriteRAM_Prepare(void);
-void LCD_WriteRAM(u16 RGB_Code);
+__STATIC_INLINE void LCD_WR_REG(vu16 regval) {
+    LCD->LCD_REG = regval;
+}
+
+__STATIC_INLINE void LCD_WR_DATA(vu16 data) {
+    LCD->LCD_RAM = data;
+}
+
+// Read LCD data
+// Return Value: Value read
+__STATIC_INLINE u16 LCD_RD_DATA(void) {
+    return LCD->LCD_RAM;
+}
+
+// Write register
+//LCD_Reg: Register Address
+//LCD_RegValue: data to be written
+__STATIC_INLINE void LCD_WriteReg(vu16 LCD_Reg, vu16 LCD_RegValue) {
+    LCD->LCD_REG = LCD_Reg;        // Write to write register number
+    LCD->LCD_RAM = LCD_RegValue;   // write data
+}
+
+// Read register
+//LCD_Reg: Register Address
+// Return Value: read data
+__STATIC_INLINE u16 LCD_ReadReg(vu16 LCD_Reg) {
+    LCD_WR_REG(LCD_Reg);        // Write the register number to be read
+    return LCD_RD_DATA();       // Return value read
+}
+
 
 #endif //_LCD_FMC_H

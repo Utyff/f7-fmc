@@ -1,6 +1,8 @@
 #include <_main.h>
 #include <keys.h>
+#include <adc.h>
 #include <string.h>
+#include <generator.h>
 
 #define DEBOUNCING_CNT 0
 #define MAX_ENCODER    255 // max encoder value
@@ -57,16 +59,16 @@ void KEYS_scan() {
     int16_t step = ENC_Get();
     if (step == 0) return;
     char buf[64];
-    sprintf(buf, "Encoder step: %i\n", (int)step);
-    HAL_UART_Transmit(&huart1,(uint8_t*)buf, (uint16_t)strlen(buf), 0xffff);
+    sprintf(buf, "step: %hi\n", step);
+    DBG_Trace((uint8_t*)buf);
 
     // choose type of encoder action
     int8_t action = button1Count % (int8_t) 3;
 /*    if (action == 0) {
         ADC_step(step);
     } else if (action == 1) {
-        DAC_step(step);
+        GEN_step(step);
     } else {
         DAC_NextGeneratorSignal();
-    }  */
+    } //*/
 }

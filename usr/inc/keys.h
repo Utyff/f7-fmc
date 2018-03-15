@@ -1,7 +1,7 @@
 #ifndef KEYS_H
 #define KEYS_H
 
-#include "stm32f7xx_hal.h"
+#include "_main.h"
 
 // buttons bits
 #define BUTTON1 0x01
