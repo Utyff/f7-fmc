@@ -219,6 +219,10 @@ void LCD_Init(void) {
         Error_Handler();
     }
 
+    char buf[250];
+    sprintf(buf, "\n LCD ID: %x\n", lcddev.id);
+    DBG_Trace((uint8_t*)buf);
+
     LCD_WR_REG(0xCF);
     LCD_WR_DATA(0x00);
     LCD_WR_DATA(0xC1);
