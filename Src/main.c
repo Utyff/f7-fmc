@@ -107,6 +107,8 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
+  // FMC 0x60000000 remap to 0xC0000000 for disable ARM Core cache.
+  SYSCFG->MEMRMP |= SYSCFG_MEMRMP_SWP_FMC_0;
 
   /* USER CODE END SysInit */
 
