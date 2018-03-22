@@ -33,8 +33,6 @@ void mainInitialize() {
 
     CORECheck();
     FPUCheck();
- // GPIOG->BSRR = GPIO_PIN_6;
- // GPIOG->BSRR = (uint32_t)GPIO_PIN_6 << 16;
 }
 
 void mainCycle() {

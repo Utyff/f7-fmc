@@ -19,8 +19,12 @@ typedef struct
 // use Bank1.sector1 of NOR / SRAM, address bits HADDR [27,26]=00
 // for A18 as command line for data command
 // Note that the STM32 will shift to the right one bit when set!
-// 0x60000000 remap to 0xC0000000 for disable ARM Core cache.
+// For F7 0x60000000 remap to 0xC0000000 for disable ARM Core cache.
+#ifdef STM32F746xx
 #define LCD_BASE        ((u32)(0xC0000000 | 0x00007FFFE))
+#else
+#define LCD_BASE        ((u32)(0x60000000 | 0x00007FFFE))
+#endif
 #define LCD             ((LCD_TypeDef *) LCD_BASE)
 
 __STATIC_INLINE void LCD_WR_REG(vu16 regval) {
